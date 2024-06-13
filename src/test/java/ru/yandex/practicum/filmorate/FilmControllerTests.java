@@ -1,5 +1,7 @@
 package ru.yandex.practicum.filmorate;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -13,11 +15,12 @@ import ru.yandex.practicum.filmorate.model.Film;
 import java.time.LocalDate;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class FilmControllerTests {
 
-    private final FilmController filmController = new FilmController();
-    private final Film film = new Film();
-    private final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new FilmController()).build();
+    FilmController filmController = new FilmController();
+    Film film = new Film();
+    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new FilmController()).build();
 
     @Test // Проверка корректности работы исключения при попытке добавления фильма с датой раньше 28 декабря 1895 года
     public void createReleaseDateFail() {

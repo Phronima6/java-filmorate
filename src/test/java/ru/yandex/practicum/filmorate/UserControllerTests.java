@@ -1,5 +1,7 @@
 package ru.yandex.practicum.filmorate;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -12,11 +14,12 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.time.LocalDate;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class UserControllerTests {
 
-    private final UserController userController = new UserController();
-    private final User user = new User();
-    private final MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new UserController()).build();
+    UserController userController = new UserController();
+    User user = new User();
+    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new UserController()).build();
 
     @Test // Проверка корректности работы исключения при попытке обновления пользователя с несуществующим id
     public void updateIdFail() {
