@@ -1,2 +1,9 @@
-# java-filmorate
-Template repository for Filmorate project.
+<h3>Приложение Filmorate</h3>
+___
+
+*Ветка main<br>
+*Ветка controllers-films-users<br>
+*Версия приложения:* **ver 1.0**(Техническое задание проекта № 10)<br>
+
+___
+Студент Шестаков А.В.
