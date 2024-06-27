@@ -12,15 +12,20 @@ import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.storage.film.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.storage.user.InMemoryUserStorage;
 import java.time.LocalDate;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class FilmControllerTests {
 
-    FilmController filmController = new FilmController();
+    FilmController filmController = new FilmController(new FilmService(new InMemoryFilmStorage(),
+            new InMemoryUserStorage()));
     Film film = new Film();
-    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new FilmController()).build();
+    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new FilmController(new FilmService(new InMemoryFilmStorage(),
+            new InMemoryUserStorage()))).build();
 
     @Test // Проверка корректности работы исключения при попытке добавления фильма с датой раньше 28 декабря 1895 года
     public void createReleaseDateFail() {
@@ -28,7 +33,7 @@ public class FilmControllerTests {
         film.setDuration(169);
         film.setName("Интерстеллар");
         film.setReleaseDate(LocalDate.of(1895, 12, 27));
-        Assertions.assertThrows(ValidationException.class, () -> filmController.create(film),
+        Assertions.assertThrows(ValidationException.class, () -> filmController.createFilm(film),
                 "Ошибка, исключение о некорректной дата релиза фильма не выдано.");
     }
 
@@ -39,17 +44,17 @@ public class FilmControllerTests {
         film.setId(100);
         film.setName("Интерстеллар");
         film.setReleaseDate(LocalDate.of(2014, 10, 26));
-        Assertions.assertThrows(NotFoundException.class, () -> filmController.update(film),
+        Assertions.assertThrows(NotFoundException.class, () -> filmController.updateFilm(film),
                 "Ошибка, исключение о некорректном id фильма не выдано.");
     }
 
     @Test // Проверка корректности работы jakarta.validation при правильном запросе на добавление фильма
-    public void validFilmThenOk() throws Exception {
+    public void validFilmThenCreated() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .post("/films")
                 .contentType(MediaType.APPLICATION_JSON).content("{\"description\":\"Когда засуха, пыльные бури...\","
                         + "\"duration\":169,\"name\":\"Интерстеллар\",\"releaseDate\":\"2014-10-26\"}"))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test // Проверка корректности работы jakarta.validation при некорректном запросе на добавление фильма

@@ -1,6 +1,8 @@
 package ru.yandex.practicum.filmorate.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -8,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(makeFinal = false, level = AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class Film {
 
@@ -17,6 +19,7 @@ public class Film {
     @Positive(message = "Продолжительность фильма должна быть положительным числом.")
     int duration; // Продолжительность фильма
     int id; // Целочисленный идентификатор фильма
+    Set<Integer> likes = new HashSet<>(); // Оценки пользователей
     @NotBlank(message = "Название фильма не может быть пустым.")
     String name; // Название фильма
     LocalDate releaseDate; // Дата релиза фильма

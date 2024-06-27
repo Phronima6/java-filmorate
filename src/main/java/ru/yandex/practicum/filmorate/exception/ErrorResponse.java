@@ -8,8 +8,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
-public class ValidationException extends RuntimeException {
+public class ErrorResponse {
 
-    String message;
+    String error;
+    String description;
 
 }

@@ -14,7 +14,7 @@ public class FilmorateApplication {
 	public static void main(String[] args) {
 		((ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(Level.INFO);
 		SpringApplication.run(FilmorateApplication.class, args);
-		log.info("Приложение Filmorate запущено.");
+		log.info("The Filmorate application is running.");
 	}
 
 }

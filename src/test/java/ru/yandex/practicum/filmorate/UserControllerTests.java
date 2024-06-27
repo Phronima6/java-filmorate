@@ -11,15 +11,18 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.storage.user.InMemoryUserStorage;
 import java.time.LocalDate;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class UserControllerTests {
 
-    UserController userController = new UserController();
+    UserController userController = new UserController(new UserService(new InMemoryUserStorage()));
     User user = new User();
-    MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new UserController()).build();
+    MockMvc mockMvc = MockMvcBuilders
+            .standaloneSetup(new UserController(new UserService(new InMemoryUserStorage()))).build();
 
     @Test // Проверка корректности работы исключения при попытке обновления пользователя с несуществующим id
     public void updateIdFail() {
@@ -28,17 +31,17 @@ public class UserControllerTests {
         user.setId(100);
         user.setLogin("J.Gosling");
         user.setName("James Arthur Gosling");
-        Assertions.assertThrows(NotFoundException.class, () -> userController.update(user),
+        Assertions.assertThrows(NotFoundException.class, () -> userController.updateUser(user),
                 "Ошибка, исключение о некорректном id пользователя не выдано.");
     }
 
     @Test // Проверка корректности работы jakarta.validation при правильном запросе на добавление пользователя
-    public void validUserThenOk() throws Exception {
+    public void validUserThenCreated() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders
                 .post("/users")
                 .contentType(MediaType.APPLICATION_JSON).content("{\"birthday\":\"1955-05-19\",\"email\":"
                         + "\"practicum@ya.ru\",\"login\":\"J.Gosling\",\"name\":\"James Arthur Gosling\"}"))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test // Проверка корректности работы jakarta.validation при некорректном запросе на добавление пользователя
