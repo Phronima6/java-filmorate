@@ -21,6 +21,8 @@ import ru.yandex.practicum.filmorate.service.FilmService;
 public class FilmController {
 
     FilmService filmService;
+    static final String ID = "id";
+    static final String USER_ID = "userId";
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -40,10 +42,10 @@ public class FilmController {
         return filmService.updateFilm(film);
     }
 
-    @PutMapping("/{id}/like/{userId}")
+    @PutMapping("/{" + ID + "}/like/{" + USER_ID + "}")
     @ResponseStatus(HttpStatus.OK)
-    public Film createLikeOfFilm(@PathVariable("id") Optional<Integer> idFilm,
-                                 @PathVariable("userId") Optional<Integer> idUser) {
+    public Film createLikeOfFilm(@PathVariable(ID) Optional<Integer> idFilm,
+                                 @PathVariable(USER_ID) Optional<Integer> idUser) {
         if (!idFilm.isPresent()) {
             log.warn("FilmController, createLikeOfFilm, not found idFilm.");
             throw new ValidationException("Ошибка при попытке поставить фильму лайк. Не был указан id фильма.");
@@ -65,10 +67,10 @@ public class FilmController {
         return filmService.createLikeOfFilm(idFilm.get(), idUser.get());
     }
 
-    @DeleteMapping("/{id}/like/{userId}")
+    @DeleteMapping("/{" + ID + "}/like/{" + USER_ID + "}")
     @ResponseStatus(HttpStatus.OK)
-    public Film deleteLikeOfFilm(@PathVariable("id") Optional<Integer> idFilm,
-                                 @PathVariable("userId") Optional<Integer> idUser) {
+    public Film deleteLikeOfFilm(@PathVariable(ID) Optional<Integer> idFilm,
+                                 @PathVariable(USER_ID) Optional<Integer> idUser) {
         if (!idFilm.isPresent()) {
             log.warn("FilmController, deleteLikeOfFilm, not found idFilm.");
             throw new ValidationException("Ошибка при попытке удалить лайк, поставленный фильму."

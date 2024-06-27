@@ -21,6 +21,8 @@ import ru.yandex.practicum.filmorate.service.UserService;
 public class UserController {
 
     UserService userService;
+    static final String ID = "id";
+    static final String FRIEND_ID = "friendId";
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -40,10 +42,10 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-    @PutMapping("/{id}/friends/{friendId}")
+    @PutMapping("/{" + ID + "}/friends/{" + FRIEND_ID + "}")
     @ResponseStatus(HttpStatus.OK)
-    public Collection<User> addFriend(@PathVariable("id") Optional<Integer> idUser,
-                           @PathVariable("friendId") Optional<Integer> idFriend) {
+    public Collection<User> addFriend(@PathVariable(ID) Optional<Integer> idUser,
+                           @PathVariable(FRIEND_ID) Optional<Integer> idFriend) {
         if (!idUser.isPresent()) {
             log.warn("UserController, addFriend, not found idUser.");
             throw new ValidationException("Ошибка при попытке добавить друга. Не был указан id пользователя.");
@@ -65,10 +67,10 @@ public class UserController {
         return userService.addFriend(idUser.get(), idFriend.get());
     }
 
-    @DeleteMapping("/{id}/friends/{friendId}")
+    @DeleteMapping("/{" + ID + "}/friends/{" + FRIEND_ID + "}")
     @ResponseStatus(HttpStatus.OK)
-    public Collection<User> deleteFriend(@PathVariable("id") Optional<Integer> idUser,
-                                       @PathVariable("friendId") Optional<Integer> idFriend) {
+    public Collection<User> deleteFriend(@PathVariable(ID) Optional<Integer> idUser,
+                                       @PathVariable(FRIEND_ID) Optional<Integer> idFriend) {
         if (!idUser.isPresent()) {
             log.warn("UserController, deleteFriend, not found idUser.");
             throw new ValidationException("Ошибка при попытке удалить друга. Не был указан id пользователя.");
@@ -90,9 +92,9 @@ public class UserController {
         return userService.deleteFriend(idUser.get(), idFriend.get());
     }
 
-    @GetMapping("/{id}/friends")
+    @GetMapping("/{" + ID + "}/friends")
     @ResponseStatus(HttpStatus.OK)
-    public Collection<User> findAllFriends(@PathVariable("id") Optional<Integer> idUser) {
+    public Collection<User> findAllFriends(@PathVariable(ID) Optional<Integer> idUser) {
         if (!idUser.isPresent()) {
             log.warn("UserController, findAllFriends, not found idUser.");
             throw new ValidationException("Ошибка при попытке получить список друзей. Не был указан id пользователя.");
@@ -105,9 +107,9 @@ public class UserController {
         return userService.findAllFriends(idUser.get());
     }
 
-    @GetMapping("/{id}/friends/common/{otherId}")
+    @GetMapping("/{" + ID + "}/friends/common/{otherId}")
     @ResponseStatus(HttpStatus.OK)
-    public Collection<User> findMutualFriends(@PathVariable("id") Optional<Integer> idUser,
+    public Collection<User> findMutualFriends(@PathVariable(ID) Optional<Integer> idUser,
                                          @PathVariable("otherId") Optional<Integer> idFriend) {
         if (!idUser.isPresent()) {
             log.warn("UserController, findMutualFriends, not found idUser.");
