@@ -4,15 +4,15 @@ ___
 *Главная ветка <span style="color:green">main</span>.*<br>
 ___
 *Добавлена ветка <span style="color:green">controllers-films-users</span>.*<br>
-*Версия приложения:* <span style="color:yellow">**ver 1.0**</span> (Привести в соответствии с ТЗ спринта № 10).<br>
-*Версия приложения:* <span style="color:yellow">**ver 1.1**</span> (Привести в соответствии с замечаниями).<br>
+*Версия приложения:* <span style="color:yellow">**ver 1.0**</span> (Привести в соответствие с ТЗ спринта № 10).<br>
+*Версия приложения:* <span style="color:yellow">**ver 1.1**</span> (Привести в соответствие с замечаниями).<br>
 ___
 *Добавлена ветка <span style="color:green">add-friends-likes</span>.*<br>
-*Версия приложения:* <span style="color:yellow">**ver 1.2**</span> (Привести в соответствии с ТЗ спринта № 11).<br>
-*Версия приложения:* <span style="color:yellow">**ver 1.3**</span> (Привести в соответствии с замечаниями).<br>
+*Версия приложения:* <span style="color:yellow">**ver 1.2**</span> (Привести в соответствие с ТЗ спринта № 11).<br>
+*Версия приложения:* <span style="color:yellow">**ver 1.3**</span> (Привести в соответствие с замечаниями).<br>
 ___
 *Добавлена ветка <span style="color:green">add-database</span>.*<br>
-*Версия приложения:* <span style="color:yellow">**ver 1.4**</span> (Привести в соответствии с промежуточным заданием спринта № 12).<br>
+*Версия приложения:* <span style="color:yellow">**ver 1.4**</span> (Привести в соответствие с промежуточным заданием спринта № 12).<br>
 *Диаграмма приложения Filmorate:*<br>
 ![Диаграмма приложения Filmorate](/diagramFilmorate.svg)
 
@@ -57,6 +57,8 @@ ___
 &nbsp;&nbsp;&nbsp;&nbsp;*rm.name <span style="color:violet">AS</span> mpa_rating*<br>
 *<span style="color:violet">FROM</span> film_storage <span style="color:violet">AS</span> fs*<br>
 *<span style="color:violet">JOIN</span> rating_mpa <span style="color:violet">AS</span> rm <span style="color:violet">ON</span> fs.id_rating_mpa = rm.id_rating_mpa;*<br>
+
+*Версия приложения:* <span style="color:yellow">**ver 1.5**</span> (Привести в соответствие с замечаниями).<br>
 
 ___
 Студент Шестаков А.В.

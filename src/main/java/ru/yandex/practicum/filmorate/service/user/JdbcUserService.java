@@ -29,7 +29,8 @@ public class JdbcUserService implements UserService {
         if (userRepository.findFriends(idUser).stream()
                 .anyMatch(user -> user.getId() == idFriend)) {
             log.warn(massageLog);
-            throw new DataException("Ошибка при попытке добавить друга. Такой друг уже есть в списке базы данных.");
+            throw new DataException("Ошибка при попытке добавить друга. Такой друг idUser = "
+                    + idFriend + " уже есть в списке базы данных.");
         }
         userRepository.addFriend(idUser, idFriend);
         log.info("UserService, addFriend, friend added.");
@@ -55,7 +56,8 @@ public class JdbcUserService implements UserService {
                 .map(User::getLogin)
                 .anyMatch(login -> login.equals(user.getLogin()))) {
             log.warn("UserService, createUser.");
-            throw new DataException("Ошибка при попытке добавить пользователя. Такой пользователь уже есть.");
+            throw new DataException("Ошибка при попытке добавить пользователя. Пользователь с таким email = "
+                    + user.getEmail() + " или login = " + user.getLogin() + " уже есть.");
         }
         return userRepository.createUser(user);
     }

@@ -63,15 +63,15 @@ public class JdbcFilmService implements FilmService {
     public void checkRatingMpaGenres(Film film) {
         if (Objects.nonNull(film.getMpa())) {
             ratingMpaRepository.findRatingMpa(film.getMpa().getId())
-                    .orElseThrow(() -> new ValidationException("В приложении не предусмотрено такое mpa"));
+                    .orElseThrow(() -> new ValidationException("Такого рейтинга для фильмов нет."));
         }
         if (Objects.nonNull(film.getGenres())) {
             film.getGenres().stream()
                     .map(Genre::getId)
                     .forEach(id -> genreRepository.findGenre(id)
                             .orElseThrow(() -> {
-                                log.warn("Передан несуществующий жанр");
-                                return new ValidationException("Передан несуществующий жанр");
+                                log.warn("JdbcFilmService, checkRatingMpaGenres.");
+                                return new ValidationException("Передан несуществующий для фильмов жанр.");
                             }));
         }
     }
@@ -95,7 +95,8 @@ public class JdbcFilmService implements FilmService {
         if (filmRepository.findLikes(idFilm).stream()
                 .anyMatch(id -> id == idUser)) {
             log.warn(massageLog);
-            throw new DataException("Ошибка при попытке поставить фильму лайк. Такой лайк уже есть.");
+            throw new DataException("Ошибка при попытке поставить фильму лайк."
+                    + " Такой лайк idUser = " + idUser + " уже есть.");
         }
         filmRepository.createLikeOfFilm(idFilm, idUser);
         log.info("FilmService, createLikeOfFilm, like created.");
@@ -111,7 +112,8 @@ public class JdbcFilmService implements FilmService {
         if (filmRepository.findLikes(idFilm).stream()
                 .noneMatch(id -> id == idUser)) {
             log.warn(massageLog);
-            throw new NotFoundException("Ошибка при попытке удалить лайк, поставленный фильму. Такого лайка нет.");
+            throw new NotFoundException("Ошибка при попытке удалить лайк, поставленный фильму."
+                    + " Такого лайка idUser = " + idUser + " нет.");
         }
         filmRepository.deleteLikeOfFilm(idFilm, idUser);
         log.info("FilmService, deleteLikeOfFilm, like deleted.");
