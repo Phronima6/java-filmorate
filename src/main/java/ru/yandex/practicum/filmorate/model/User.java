@@ -18,8 +18,8 @@ public class User {
     LocalDate birthday; // Дата рождения
     @Email(message = "Некорректно введен email пользователя.")
     String email; // Электронная почта пользователя
-    Set<Integer> friends = new HashSet<>(); // Список друзей
-    int id; // Целочисленный идентификатор пользователя
+    Set<User> friends = new HashSet<>(); // Список друзей
+    int id; // Идентификатор пользователя
     @NotBlank(message = "Логин пользователя не может быть пустым.")
     String login; // Логин пользователя
     String name; // Имя пользователя для отображения

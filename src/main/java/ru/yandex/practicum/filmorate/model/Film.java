@@ -18,10 +18,13 @@ public class Film {
     String description; // Описания фильма
     @Positive(message = "Продолжительность фильма должна быть положительным числом.")
     int duration; // Продолжительность фильма
-    int id; // Целочисленный идентификатор фильма
+    Set<Genre> genres = new HashSet<>(); // Жанры фильма
+    int id; // Идентификатор фильма
+    int idRatingMpa; // Идентификатор рейтинга фильма
     Set<Integer> likes = new HashSet<>(); // Оценки пользователей
     @NotBlank(message = "Название фильма не может быть пустым.")
     String name; // Название фильма
+    RatingMpa mpa; // Рейтинга фильма
     LocalDate releaseDate; // Дата релиза фильма
 
 }
