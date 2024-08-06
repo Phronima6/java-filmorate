@@ -20,4 +20,10 @@ public class ErrorHandler {
         return new ErrorResponse("error", exception.getMessage());
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleDataSave(final DataException exception) {
+        return new ErrorResponse("error", exception.getMessage());
+    }
+
 }
